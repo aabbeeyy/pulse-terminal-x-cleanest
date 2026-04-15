@@ -1,0 +1,6 @@
+export type ClientUser = { id: string; name: string; email: string; plan: "Free" | "Basic" | "Pro"; subscriptionStatus: string; stripeCustomerId: string | null; currentPeriodEnd: string | null; isPremium: boolean; isPro: boolean; };
+async function readJson<T>(res: Response): Promise<T> { const data = await res.json(); if (!res.ok) throw new Error(data?.error || "Request failed."); return data as T; }
+export async function fetchCurrentUser() { const res = await fetch("/api/auth/me", { cache: "no-store" }); return readJson<{ user: ClientUser | null }>(res); }
+export async function signup(payload: { name: string; email: string; password: string }) { const res = await fetch("/api/auth/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }); return readJson<{ user: ClientUser }>(res); }
+export async function login(payload: { email: string; password: string }) { const res = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }); return readJson<{ user: ClientUser }>(res); }
+export async function logout() { const res = await fetch("/api/auth/logout", { method: "POST" }); return readJson<{ ok: true }>(res); }

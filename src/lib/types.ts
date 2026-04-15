@@ -1,0 +1,9 @@
+export type AssetClass = "stock" | "forex" | "metal" | "crypto";
+export type Timeframe = "15m" | "1h" | "4h" | "1d" | "1w" | "1m";
+export type SearchPreset = { label: string; symbol: string; assetClass: AssetClass; providerId?: string; };
+export type ChartPoint = { time: string; value: number; open: number; high: number; low: number; close: number; };
+export type SignalAction = "BUY" | "SELL" | "HOLD";
+export type SignalPayload = { action: SignalAction; confidence: number; rationale: string[]; entry: number; takeProfit: number; stopLoss: number; riskReward: string; biasScore: number; trend: "Bullish" | "Bearish" | "Sideways"; horizon: string; rsi: number; support: number; resistance: number; breakout: "bullish" | "bearish" | "none"; summary: string; projectedMove: number; };
+export type QuotePayload = { symbol: string; assetClass: AssetClass; name: string; price: number; changePercent: number; high?: number; low?: number; volume?: number; currency: string; timeframe: Timeframe; chart: ChartPoint[]; signal: SignalPayload; headline: string; updatedAt: string; };
+export type NewsItem = { title: string; source: string; url: string; summary?: string; sentiment?: string; timePublished?: string; };
+export type HolidayItem = { exchange: string; date: string; holiday: string; status: string; };

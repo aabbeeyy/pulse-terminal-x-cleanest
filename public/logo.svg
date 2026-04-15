@@ -1,0 +1,6 @@
+<svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" rx="14" fill="#14b8a6"/>
+  <path d="M12 31L20 22L27 27L36 15" stroke="#0b1020" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="36" cy="15" r="3" fill="#0b1020"/>
+  <text x="60" y="30" fill="#E5EEF8" font-family="Arial, sans-serif" font-size="22" font-weight="700">MarketPulse Pro</text>
+</svg>

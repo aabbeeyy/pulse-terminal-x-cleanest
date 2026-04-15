@@ -1,0 +1,40 @@
+{
+  "name": "market-pulse-pro",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+
+    "bcryptjs": "^2.4.3",
+
+
+    "jose": "^5.9.6",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.511.0",
+    "mongodb": "^6.21.0",
+    "mongoose": "^8.13.2",
+    "next": "^16.2.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "recharts": "^2.15.1",
+    "stripe": "^18.1.1"
+  },
+  "devDependencies": {
+
+    "@types/bcryptjs": "^2.4.6",
+
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.2"
+  }
+}

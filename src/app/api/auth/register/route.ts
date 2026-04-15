@@ -1,0 +1,31 @@
+import { connectToDatabase } from "@/lib/db";
+import { setSessionCookie, hashPassword, serializeUser } from "@/lib/auth";
+import { UserModel } from "@/lib/models/User";
+import { NextResponse } from "next/server";
+
+export async function POST(request: Request) {
+  try {
+    const { name, email, password } = await request.json();
+    if (!name?.trim() || !email?.trim() || !password || password.length < 6) {
+      return NextResponse.json({ error: "Name, email, and a password with at least 6 characters are required." }, { status: 400 });
+    }
+
+    await connectToDatabase();
+    const normalizedEmail = String(email).trim().toLowerCase();
+    const exists = await UserModel.findOne({ email: normalizedEmail }).lean();
+    if (exists) {
+      return NextResponse.json({ error: "An account with this email already exists." }, { status: 409 });
+    }
+
+    const user = await UserModel.create({
+      name: String(name).trim(),
+      email: normalizedEmail,
+      passwordHash: await hashPassword(password),
+    });
+
+    await setSessionCookie({ userId: String(user._id), email: user.email, name: user.name, plan: user.plan });
+    return NextResponse.json({ user: serializeUser(user) });
+  } catch (error) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to create account." }, { status: 500 });
+  }
+}

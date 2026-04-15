@@ -1,0 +1,4 @@
+import mongoose, { Model, Schema, type InferSchemaType } from "mongoose";
+const UserSchema = new Schema({ name: { type: String, required: true, trim: true }, email: { type: String, required: true, unique: true, lowercase: true, trim: true }, passwordHash: { type: String, required: true }, plan: { type: String, enum: ["Free", "Basic", "Pro"], default: "Free" }, subscriptionStatus: { type: String, default: "inactive" }, stripeCustomerId: { type: String }, stripeSubscriptionId: { type: String }, currentPeriodEnd: { type: Date }, watchlist: { type: [String], default: [] } }, { timestamps: true });
+export type UserDocument = InferSchemaType<typeof UserSchema> & { _id: mongoose.Types.ObjectId };
+export const UserModel: Model<UserDocument> = (mongoose.models.User as Model<UserDocument>) || mongoose.model<UserDocument>("User", UserSchema);

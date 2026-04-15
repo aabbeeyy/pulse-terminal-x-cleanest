@@ -1,0 +1,5 @@
+import { connectToDatabase } from "@/lib/db";
+import { setSessionCookie, verifyPassword, serializeUser } from "@/lib/auth";
+import { UserModel } from "@/lib/models/User";
+import { NextResponse } from "next/server";
+export async function POST(request: Request) { try { const { email, password } = await request.json(); if (!email?.trim() || !password) return NextResponse.json({ error: "Email and password are required." }, { status: 400 }); await connectToDatabase(); const normalizedEmail = String(email).trim().toLowerCase(); const user = await UserModel.findOne({ email: normalizedEmail }); if (!user) return NextResponse.json({ error: "Invalid email or password." }, { status: 401 }); const isValid = await verifyPassword(password, user.passwordHash); if (!isValid) return NextResponse.json({ error: "Invalid email or password." }, { status: 401 }); await setSessionCookie({ userId: String(user._id), email: user.email, name: user.name, plan: user.plan }); return NextResponse.json({ user: serializeUser(user) }); } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to log in." }, { status: 500 }); } }
